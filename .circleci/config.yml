@@ -295,7 +295,6 @@ jobs:
 workflows:
   default:
     jobs:
-      - get-id
       - build-frontend
       - build-backend
       - test-frontend:
