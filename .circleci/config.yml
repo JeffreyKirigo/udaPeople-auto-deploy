@@ -153,7 +153,7 @@ jobs:
           command: |
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --filters "Name=tag:Name,Values=udaPeople" \
+            --filters "Name=tag:Name,Values=backend-${ID}" \
             --output text >> inventory
             cat inventory
       # - persist_to_workspace:
