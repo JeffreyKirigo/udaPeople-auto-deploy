@@ -135,7 +135,7 @@ jobs:
       - run:
           name: circle-flow id
           command: |
-            echo $CIRCLE_WORKFLOW_ID
+            echo ${CIRCLE_WORKFLOW_ID}
 
   # deploy-infrastructure:
   #   docker:
@@ -148,7 +148,7 @@ jobs:
   #           aws cloudformation deploy \
   #             --template-file .circleci/files/backend.yml \
   #             --tags project=udaPeople \
-  #             --stack-name "your back-end stack name with workflow id" \
+  #             --stack-name "udapeople-backend-${}" \
   #             --parameter-overrides ID="your workflow id"  
   #             exit 1
   #     - run:
@@ -306,7 +306,6 @@ jobs:
 workflows:
   default:
     jobs:
-      - get-id
       - build-frontend
       - build-backend
       - test-frontend:
