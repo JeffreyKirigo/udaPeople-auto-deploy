@@ -154,6 +154,7 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - run: apt install tar gzip -y
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -186,25 +187,25 @@ jobs:
 
       - destroy-environment
 
-  configure-infrastructure:
-    docker:
-      - image: python:3.7-alpine3.11
-    steps:
-      - checkout
-      - install-awscli
-      - add_ssh_keys: 
-          fingerprints:
-            - 'cb:95:2b:f8:04:d8:de:20:22:d7:f3:ae:0a:d7:dc:97'
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --update ansible
-      - run:
-          name: Configure server
-          command: |
-            ansible --version
+  # configure-infrastructure:
+  #   docker:
+  #     - image: python:3.7-alpine3.11
+  #   steps:
+  #     - checkout
+  #     - install-awscli
+  #     - add_ssh_keys: 
+  #         fingerprints:
+  #           - 'cb:95:2b:f8:04:d8:de:20:22:d7:f3:ae:0a:d7:dc:97'
+  #     - attach_workspace:
+  #         at: ~/
+  #     - run:
+  #         name: Install dependencies
+  #         command: |
+  #           apk add --update ansible
+  #     - run:
+  #         name: Configure server
+  #         command: |
+  #           ansible --version
       # Here's where you will add some code to rollback on failure
 
 #   run-migrations:
