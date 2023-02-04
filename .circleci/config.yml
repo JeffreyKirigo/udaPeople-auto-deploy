@@ -151,10 +151,9 @@ jobs:
 
   deploy-infrastructure:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: amazon/aws-cli
     steps:
       - checkout
-      - install-awscli
       - run:
           name: Ensure back-end infrastructure exists
           command: |
