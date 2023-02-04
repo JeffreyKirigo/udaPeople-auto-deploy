@@ -1,13 +1,6 @@
 version: 2.1
 
-commands:
-  install-dependencies:
-    description: Install dependencies
-    steps:
-      - run:
-          command: |
-            apk add --update --no-cache ansible taz gzip aws-cli open-ssh
-          
+commands:          
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -168,6 +161,7 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udaPeople" \
               --output text >> ~/project/.circleci/ansible/inventory.txt
+              cat ~/project/.circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
@@ -186,7 +180,10 @@ jobs:
             - 'cb:95:2b:f8:04:d8:de:20:22:d7:f3:ae:0a:d7:dc:97'
       - attach_workspace:
           at: ~/
-      - install-dependencies
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update --no-cache ansible taz gzip aws-cli open-ssh
       - run:
           name: Configure server
           command: |
