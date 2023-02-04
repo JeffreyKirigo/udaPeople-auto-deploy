@@ -183,7 +183,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update --no-cache ansible taz gzip aws-cli open-ssh
+            apk add --update python3 ansible taz gzip aws-cli open-ssh
       - run:
           name: Configure server
           command: |
