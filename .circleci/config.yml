@@ -1,6 +1,20 @@
 version: 2.1
 
-commands:          
+commands:
+  install-dependencies:
+    description: installs dependencies
+    steps:
+      - run:
+          command:
+            apk add python curl
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            apk add ansible
+            apk add openssh
+            apk add taz gzip
+
+
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -180,10 +194,7 @@ jobs:
             - 'cb:95:2b:f8:04:d8:de:20:22:d7:f3:ae:0a:d7:dc:97'
       - attach_workspace:
           at: ~/
-      - run:
-          name: Install dependencies
-          command: |
-            apk add update ansible taz gzip aws-cli openssh
+      - install-dependencies
       - run:
           name: Configure server
           command: |
