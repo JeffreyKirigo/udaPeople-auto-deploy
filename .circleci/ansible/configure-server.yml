@@ -1,7 +1,7 @@
 ---
 
 - name: "configuration play." 
-  hosts: web
+  hosts: ubuntu
   user: ubuntu
   become: true
   become_method: sudo
@@ -21,6 +21,7 @@
       apt:
         name: python3
         state: latest 
+        update_cache: yes
 
   # Get the environment variables from CircleCI and add to the EC2 instance
   environment:
