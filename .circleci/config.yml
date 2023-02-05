@@ -6,13 +6,7 @@ commands:
     steps:
       - run:
           command:
-            apk add python curl
-            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-            unzip awscli-bundle.zip
-            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-            apk add ansible
-            apk add openssh
-            apk add taz gzip
+            apk add --update --no-cache ansible aws-cli tar gzip openssh
 
 
   destroy-environment:
@@ -186,7 +180,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: python:3.8.2-alpine
+      - image: python:3.10-alpine3.16
     steps:
       - checkout
       - add_ssh_keys: 
