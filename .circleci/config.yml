@@ -193,9 +193,8 @@ jobs:
       - run:
           name: Configure server
           command: |
-            echo $PATH
-            ansible --version
-      # Here's where you will add some code to rollback on failure
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt configure-server.yml
 
 #   run-migrations:
 #     docker:
