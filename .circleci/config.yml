@@ -215,10 +215,10 @@ jobs:
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
-              curl https://kvdb.io/5ohnRfHpLaXrc2TnRv5ZxA/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
-              exit 0
+              echo 'Successful and ready to send'
+              return 0
             else
-              exit 1
+              return 1
             fi
 
      # Here's where you will add some code to rollback on failure
