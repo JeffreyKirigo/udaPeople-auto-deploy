@@ -254,10 +254,10 @@ jobs:
             # echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             # cat frontend/.env
 
-      - run:
-          name: Deploy frontend objects
-          command: |
-            # your code here
+      # - run:
+      #     name: Deploy frontend objects
+      #     command: |
+      #       # your code here
       # Here's where you will add some code to rollback on failure
 
 #   deploy-backend:
@@ -356,8 +356,8 @@ workflows:
           requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
+      - deploy-frontend:
+          requires: [run-migrations]
       # - deploy-backend:
       #     requires: [run-migrations]
       # - smoke-test:
