@@ -224,6 +224,8 @@ jobs:
       - image: python:3.10-alpine3.16
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install ansible
           command: |
@@ -245,14 +247,18 @@ jobs:
               --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
-            # echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
-            # cat frontend/.env
+            echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
+            cat frontend/.env
 
-      # - run:
-      #     name: Deploy frontend objects
-      #     command: |
-      #       # your code here
-      # Here's where you will add some code to rollback on failure
+      - run:
+          name: Deploy frontend objects
+          command: |
+            cd frontend
+            npm install
+            npm run build
+            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
+            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            # Here's where you will add some code to rollback on failure
 
 #   deploy-backend:
 #     docker:
