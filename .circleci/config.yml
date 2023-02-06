@@ -6,7 +6,7 @@ commands:
     steps:
       - run:
           command:
-            apk add --update --no-cache tar gzip openssh
+            apk add --update --no-cache tar gzip openssh curl
       - run:
           name: Install ansible
           command: |
