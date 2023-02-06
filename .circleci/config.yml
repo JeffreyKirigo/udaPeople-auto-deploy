@@ -227,8 +227,7 @@ jobs:
       - run:
           name: Install ansible
           command: |
-            yum install epel-release
-            yum install ansible
+            sudo yum install ansible
       - run:
           name: Install python
           command: |
