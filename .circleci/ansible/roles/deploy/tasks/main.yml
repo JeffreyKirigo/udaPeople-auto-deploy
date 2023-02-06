@@ -1,0 +1,34 @@
+---
+  - name: install dependencies - nodeJs & npm
+    become: true
+    apt:
+      name: ['nodejs', 'npm']
+      state: latest
+
+  - name: install pm2
+    become: true
+    npm:
+      name: pm2
+      global: yes
+      production: yes
+      state: present
+
+  - name: create backend directory
+    file:
+      path: ~/backend_app
+      state: directory
+
+  - name: copy artifact into instance
+    copy:
+      src: ~/project/artifact.tar.gz
+      dest: ~/backend_app/artifact.tar.gz
+
+  - name: start app
+    become: true
+    shell: |
+      cd ~/backend_app
+      tar xzvf artifact.tar.gz
+      npm install
+      npm run build
+      pm2 stop all
+      pm2 start npm -- start
