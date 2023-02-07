@@ -13,6 +13,3 @@
     production: yes
     state: present
   
-- name: start pm2
-  shell: |
-    pm2 start
