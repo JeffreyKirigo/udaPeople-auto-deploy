@@ -5,8 +5,7 @@ commands:
     description: installs dependencies
     steps:
       - run:
-          command:
-            apk add --update --no-cache tar gzip openssh curl
+          command: apk add --update --no-cache tar gzip openssh
       - run:
           name: Install ansible
           command: |
@@ -15,11 +14,10 @@ commands:
           name: Install aws-cli
           command: |
             apk add --update --no-cache aws-cli
-      - run: 
+      - run:
           name: Install node & npm
           command: |
             apk add --update nodejs npm
-
 
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -156,9 +154,8 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - run: 
-          command:
-            yum install tar gzip -y
+      - run:
+          command: yum install tar gzip -y
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -196,9 +193,9 @@ jobs:
       - image: python:3.10-alpine3.16
     steps:
       - checkout
-      - add_ssh_keys: 
+      - add_ssh_keys:
           fingerprints:
-            - 'cb:95:2b:f8:04:d8:de:20:22:d7:f3:ae:0a:d7:dc:97'
+            - "cb:95:2b:f8:04:d8:de:20:22:d7:f3:ae:0a:d7:dc:97"
       - attach_workspace:
           at: ~/
       - install-dependencies
@@ -211,7 +208,7 @@ jobs:
 
   run-migrations:
     docker:
-      - image: circleci/node:13.8.0 
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
@@ -229,7 +226,7 @@ jobs:
               curl --insecure https://kvdb.io/9z7hcjpRBmFKEszYpMdUpD/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}  -d '1'
             fi
 
-     # Here's where you will add some code to rollback on failure
+      # Here's where you will add some code to rollback on failure
 
   deploy-frontend:
     docker:
@@ -267,9 +264,9 @@ jobs:
       - image: python:3.10-alpine3.16
     steps:
       - checkout
-      - add_ssh_keys: 
+      - add_ssh_keys:
           fingerprints:
-            - 'cb:95:2b:f8:04:d8:de:20:22:d7:f3:ae:0a:d7:dc:97'
+            - "cb:95:2b:f8:04:d8:de:20:22:d7:f3:ae:0a:d7:dc:97"
       - attach_workspace:
           at: ~/
       - install-dependencies
