@@ -1,14 +1,14 @@
 ---
-  - name: install dependencies - nodeJs & npm
-    become: true
-    apt:
-      name: ['nodejs', 'npm']
-      state: latest
+- name: install dependencies - nodeJs & npm
+  become: true
+  apt:
+    name: ["nodejs", "npm"]
+    state: latest
 
-  - name: install pm2
-    become: true
-    npm:
-      name: pm2
-      global: yes
-      production: yes
-      state: present
+- name: install pm2
+  become: true
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present
