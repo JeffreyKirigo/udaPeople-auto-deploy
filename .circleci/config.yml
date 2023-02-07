@@ -5,23 +5,8 @@ commands:
     description: installs dependencies
     steps:
       - run:
-          command: apk add --update --no-cache tar gzip openssh
-      - run:
-          name: Install ansible
-          command: |
-            apk add --update --no-cache ansible
-      - run:
-          name: Install aws-cli
-          command: |
-            apk add --update --no-cache aws-cli
-      - run:
-          name: Install node & npm
-          command: |
-            apk add --update nodejs npm
-      - run:
-          name: Install curl
-          command: |
-            apk add --update --no-cache curl
+          name: Install dependencies
+          command: apk add --update --no-cache ansible curl nodejs aws-cli npm tar gzip openssh
 
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -244,7 +229,7 @@ jobs:
           name: Get backend url
           command: |
             export BACKEND_IP=$(aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --query 'Reservations[*].Instances[*].PublicDns' \
               --filters "Name=tag:project,Values=udaPeople" \
               --output text)
             export API_URL="http://${BACKEND_IP}:3030"
@@ -299,7 +284,7 @@ jobs:
           name: Get backend url
           command: |
             export BACKEND_IP=$(aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --query 'Reservations[*].Instances[*].PublicDns' \
               --filters "Name=tag:project,Values=udaPeople" \
               --output text)
             export API_URL="http://${BACKEND_IP}:3030"
