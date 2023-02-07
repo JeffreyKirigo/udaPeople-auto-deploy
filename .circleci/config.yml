@@ -312,10 +312,8 @@ jobs:
             sleep 60
             if curl -s $API_URL/api/status | grep ok
             then
-              echo 'working'
               return 0
             else
-              echo 'failed' 
               return 1
             fi
       - run:
