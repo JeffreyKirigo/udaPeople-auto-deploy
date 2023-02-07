@@ -18,6 +18,10 @@ commands:
           name: Install node & npm
           command: |
             apk add --update nodejs npm
+      - run:
+          name: Install curl
+          command: |
+            apk add --update --no-cache curl
 
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
