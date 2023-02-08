@@ -23,11 +23,21 @@
     src: ~/project/artifact.tar.gz
     dest: ~/backend_app/artifact.tar.gz
 
+- name: extract backend
+  shell: |
+    cd ~/backend_app
+    tar xzvf artifact.tar.gz
+    ls -l
+  register: extract_output
+
+- debug:
+    var: extract_output.stdout_lines
+
+
 - name: start app
   become: true
   shell: |
     cd ~/backend_app
-    tar xzvf artifact.tar.gz
     npm install
     npm run build
     pm2 stop all
