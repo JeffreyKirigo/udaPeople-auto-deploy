@@ -5,8 +5,38 @@ commands:
     description: installs dependencies
     steps:
       - run:
-          name: Install dependencies
-          command: apk add --update --no-cache ansible curl nodejs aws-cli npm tar gzip openssh
+          name: additional dependencies
+          command: |
+            sudo apt-get install python3.8
+            sudo apt-get install openssh-client
+            sudo apt install gzip
+
+      - run:
+          name: Install AWS-CLI
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+
+      - run:
+          name: Install ansible
+          command: |
+            sudo apt update && upgrade
+            sudo apt install software-properties-common
+            sudo apt-add-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible
+            ansible --version
+
+      - run:
+          name: Install Node & npm
+          command: |
+            sudo apt-get install curl
+            curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - &&\
+            sudo apt-get install nodejs
+
+            sudo npm cache clean -f
+            sudo npm install -g n
+            sudo n v13.8.0
 
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -182,7 +212,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: python:3.10-alpine3.16
+      - image: cimg/base:stable
     steps:
       - checkout
       - add_ssh_keys:
@@ -224,7 +254,7 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: python:3.10-alpine3.16
+      - image: cimg/base:stable
     steps:
       - checkout
       - attach_workspace:
@@ -256,7 +286,7 @@ jobs:
 
   deploy-backend:
     docker:
-      - image: python:3.10-alpine3.16
+      - image: cimg/base:stable
     steps:
       - checkout
       - add_ssh_keys:
@@ -296,7 +326,7 @@ jobs:
 
   smoke-test:
     docker:
-      - image: python:3.10-alpine3.16
+      - image: cimg/base:stable
     steps:
       - checkout
       - install-dependencies
