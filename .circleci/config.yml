@@ -7,9 +7,9 @@ commands:
       - run:
           name: additional dependencies
           command: |
-            sudo apt-get install python3.8
-            sudo apt-get install openssh-client
-            sudo apt install gzip
+            sudo apt-get install python3.8 -y
+            sudo apt-get install openssh-client -y
+            sudo apt install gzip -y
 
       - run:
           name: Install AWS-CLI
@@ -17,14 +17,15 @@ commands:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
+            aws --version
 
       - run:
           name: Install ansible
           command: |
-            sudo apt update && upgrade
+            sudo apt update && upgrade -y
             sudo apt install software-properties-common
             sudo apt-add-repository --yes --update ppa:ansible/ansible
-            sudo apt install ansible
+            sudo apt install ansible -y
             ansible --version
 
       - run:
@@ -32,7 +33,7 @@ commands:
           command: |
             sudo apt-get install curl
             curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - &&\
-            sudo apt-get install nodejs
+            sudo apt-get install nodejs -y
 
             sudo npm cache clean -f
             sudo npm install -g n
