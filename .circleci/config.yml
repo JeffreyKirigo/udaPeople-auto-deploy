@@ -314,7 +314,7 @@ jobs:
           command: |
             echo 'sleeping for 50 seconds ...'
             sleep 50s
-            if curl $API_URL/api/status | grep ok
+            if curl "$API_URL/api/status" | grep ok
             then
               return 0
             else
