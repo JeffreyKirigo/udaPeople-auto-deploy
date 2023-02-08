@@ -35,7 +35,6 @@
 - debug:
     var: extract_output.stdout_lines
 
-
 - name: stop-pm2
   become: true
   shell: |
@@ -47,11 +46,10 @@
 
 - name: start-app
   become: true
-  shell:  |
+  shell: |
     cd ~/backend
     pm2 start npm -- start
   register: start_app
 
 - debug:
     var: start_app.stdout_lines
-
