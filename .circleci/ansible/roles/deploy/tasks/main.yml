@@ -44,12 +44,24 @@
 # - debug:
 #     var: command_output.stdout_lines
 
-- name: start-app
+- name: pm2 start
   become: true
   shell: |
     cd ~/backend
-    pm2 start npm -- start
-  register: start_app
+    pm2 stop all
+    pm2 start
+  register: pm2_app
 
 - debug:
-    var: start_app.stdout_lines
+    var: pm2_app.stdout_lines
+
+- name: npm-start
+  become: true
+  shell: |
+    cd ~/backend
+    npm -- start
+  register: npm_start
+
+- debug:
+    var: npm_start.stdout_lines
+  
