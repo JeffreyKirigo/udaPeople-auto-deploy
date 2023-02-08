@@ -35,14 +35,14 @@
 - debug:
     var: extract_output.stdout_lines
 
-- name: stop-pm2
-  become: true
-  shell: |
-    pm2 stop all
-  register: command_output
+# - name: stop-pm2
+#   become: true
+#   shell: |
+#     pm2 stop all
+#   register: command_output
 
-- debug:
-    var: command_output.stdout_lines
+# - debug:
+#     var: command_output.stdout_lines
 
 - name: start-app
   become: true
