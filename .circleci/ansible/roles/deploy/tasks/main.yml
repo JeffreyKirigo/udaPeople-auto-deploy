@@ -35,11 +35,11 @@
 - debug:
     var: extract_output.stdout_lines
 
-- name: stop-pm2
-  become: true
-  shell: |
-    pm2 stop all
-  register: command_output
+# - name: stop-pm2
+#   become: true
+#   shell: |
+#     pm2 stop all
+#   register: command_output
 
 - debug:
     var: command_output.stdout_lines
@@ -48,7 +48,6 @@
   become: true
   shell: |
     cd ~/backend
-    pm2 stop all
     pm2 start
   register: pm2_app
 
