@@ -40,6 +40,7 @@
 
 - name: start-up
   become: true
+  become_method: sudo
   shell: |
     cd babackend_app
     npm install
