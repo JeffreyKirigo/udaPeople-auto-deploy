@@ -340,10 +340,8 @@ jobs:
               --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
-      - run:
-          name: Backend smoke test
-          command: |
-            echo 'Continuing in 60 seconds ... to ${API_URL}'
+
+            echo 'Continuing in 60 seconds ... to $API_URL'
 
             sleep 60s
             if curl $API_URL/api/status | grep ok
