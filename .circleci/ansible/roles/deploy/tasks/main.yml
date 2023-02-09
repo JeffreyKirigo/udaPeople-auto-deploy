@@ -35,30 +35,13 @@
 - debug:
     var: extract_output.stdout_lines
 
-# - name: stop-pm2
-#   become: true
-#   shell: |
-#     pm2 stop all
-#   register: command_output
-
-- debug:
-    var: command_output.stdout_lines
-
-- name: pm2 start
+- name: start-app
   become: true
   shell: |
     cd ~/backend
-    pm2 start
-  register: pm2_app
-
-- debug:
-    var: pm2_app.stdout_lines
-
-- name: npm-start
-  become: true
-  shell: |
-    cd ~/backend
-    npm -- start
+    npm install
+    pm2 stop default
+    pm2 start npm -- start
   register: npm_start
 
 - debug:
