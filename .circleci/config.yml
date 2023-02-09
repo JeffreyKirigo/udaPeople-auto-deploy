@@ -153,6 +153,7 @@ jobs:
             cd frontend
             npm install
             npm audit fix --force --audit-level=critical
+            npm audit fix --force --audit-level=critical
             npm audit --audit-level=critical
 
   scan-backend:
@@ -364,7 +365,7 @@ jobs:
           command: |
             FRONTEND_URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"
             echo ${FRONTEND_URL}
-            
+
             if curl "${FRONTEND_URL}" | grep "Welcome"
             then
             # Change this to 0 after the job fails
