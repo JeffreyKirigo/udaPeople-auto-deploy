@@ -48,7 +48,7 @@
   become: true
   shell: |
     cd ~/backend
-    sudo pm2 start
+    pm2 start
   register: pm2_app
 
 - debug:

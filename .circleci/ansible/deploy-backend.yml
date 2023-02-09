@@ -1,6 +1,5 @@
 ---
-
-- name: "configuration play." 
+- name: "configuration play."
   hosts: ubuntu
   user: ubuntu
   gather_facts: false

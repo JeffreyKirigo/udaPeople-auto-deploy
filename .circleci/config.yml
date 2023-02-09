@@ -38,6 +38,7 @@ commands:
             sudo npm cache clean -f
             sudo npm install -g n
             sudo n v13.8.0
+            node -v
 
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -73,7 +74,7 @@ commands:
             then
              cd ~/project/backend
              npm install
-             npm run migration:revert
+             npm run migrations:revert
               exit 1
             fi
 
