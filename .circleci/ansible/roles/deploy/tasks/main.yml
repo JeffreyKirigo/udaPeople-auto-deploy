@@ -40,7 +40,7 @@
 
 - name: start-up
   become: true
-  shell:  |
+  shell: |
     cd babackend_app
     npm install
     npm run build
@@ -48,4 +48,4 @@
     pm2 start npm -- start
   register: start_up
 - debug:
-    var:  start_upstdout_lines
+    var: start_upstdout_lines
