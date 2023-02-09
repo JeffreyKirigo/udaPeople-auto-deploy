@@ -80,7 +80,7 @@ commands:
 jobs:
   build-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -97,7 +97,7 @@ jobs:
 
   build-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -114,7 +114,7 @@ jobs:
 
   test-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -128,7 +128,7 @@ jobs:
 
   test-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -142,7 +142,7 @@ jobs:
 
   scan-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -152,13 +152,12 @@ jobs:
           command: |
             cd frontend
             npm install
-            npm update
-            npm audit fix --force
+            npm audit fix --force --audit-level=critical
             npm audit --audit-level=critical
 
   scan-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -168,8 +167,8 @@ jobs:
           command: |
             cd backend
             npm install
-            npm audit fix --audit-level=critical --force
-            npm update mkdirp --depth 2
+            npm audit fix --force --audit-level=critical
+            npm audit fix --force --audit-level=critical
             npm audit --audit-level=critical
 
   deploy-infrastructure:
@@ -287,17 +286,17 @@ jobs:
 
   deploy-backend:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/python:3.10
     steps:
       - checkout
+      - install-dependencies
       - add_ssh_keys:
           fingerprints:
             - "cb:95:2b:f8:04:d8:de:20:22:d7:f3:ae:0a:d7:dc:97"
       - attach_workspace:
           at: ~/
-      - install-dependencies
       - run:
-          name: Deploy backend
+          name: pre-backend packaging
           command: |
             cd backend
             touch .env
@@ -313,15 +312,25 @@ jobs:
             echo NODE_ENV=production >> .env
             echo TYPEORM_PORT=$TYPEORM_PORT >> .env
 
-            npm install
+      - run:
+          name: backend packaging
+          command: |
+            cd backend
             npm run build
+            tar -czvf artifact.tar.gz dist/* package*
+            
             cd ..
-            tar -C backend -czvf artifact.tar.gz .
+            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
+
+      - run:
+          name: deploy backend
+          command: |
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
           no_output_timeout: 30m
+
       - destroy-environment
       - revert-migrations
 
@@ -338,9 +347,12 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udaPeople" \
               --output text)
+            
             export API_URL="http://${BACKEND_IP}:3030"
+
             echo "Continuing in 60 seconds ... to ${API_URL}"
             sleep 60
+
             if curl -s $API_URL/api/status | grep "ok"
             then
               exit 0
@@ -350,9 +362,10 @@ jobs:
       - run:
           name: Frontend smoke test.
           command: |
-            URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"
-            echo ${URL}
-            if curl "${URL}" | grep "Welcome"
+            FRONTEND_URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"
+            echo ${FRONTEND_URL}
+            
+            if curl "${FRONTEND_URL}" | grep "Welcome"
             then
             # Change this to 0 after the job fails
               exit 0
