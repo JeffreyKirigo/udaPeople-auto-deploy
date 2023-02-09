@@ -23,14 +23,16 @@
     src: ~/project/artifact.tar.gz
     dest: ~/backend_app/artifact.tar.gz
 
-- name: extract backend
+- name: extract_backend
   become: true
   become_method: sudo
   shell: |
-    cd $HOME/backend_app
+    cd ~/
     apt-get install tar -y
+    ls -a
+    cd backend_app
     tar -xzvf artifact.tar.gz
-    ls -l
+    ls -a
   register: extract_output
 
 - debug:
@@ -38,9 +40,13 @@
 
 - name: start-up
   become: true
-  shell: |
-    cd $HOME/backend_app
+  shell:  |
+    cd ~/
+    cd babackend_app
     npm install
     npm run build
     pm2 stop default
     pm2 start npm -- start
+  register: start_up
+- debug:
+    var:  start_upstdout_lines
