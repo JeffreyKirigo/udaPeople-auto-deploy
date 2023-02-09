@@ -75,7 +75,6 @@ commands:
               cd ~/project/backend
               npm install
               npm run migrations:revert
-              exit 1
             fi
 
 jobs:
@@ -344,11 +343,11 @@ jobs:
       - run:
           name: Backend smoke test
           command: |
-            if curl $API_URL/api/status | grep ok | grep ok
+            if curl -s $API_URL/api/status | grep ok
             then
-              return 0
+              exit 0
             else
-              return 1
+              exit 1
             fi
       - run:
           name: Frontend smoke test.
