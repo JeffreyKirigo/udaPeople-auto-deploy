@@ -45,7 +45,7 @@
     cd backend_app
     npm install
     npm run build
-    pm2 stop all
+    pm2 stop default
     sleep 20s
     pm2 start npm --name "backend" -- run start
   register: start_up
