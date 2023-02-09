@@ -29,6 +29,10 @@
     cd ~/backend_app
     tar -xzvf artifact.tar.gz
     ls -l
+  register: extract_output
+
+- debug:
+    var: "{{ extract_output.stdout_lines }}"
 
 - name: start-up
   become: true
