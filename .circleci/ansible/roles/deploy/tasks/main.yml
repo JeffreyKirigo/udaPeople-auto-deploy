@@ -42,10 +42,10 @@
   become: true
   become_method: sudo
   shell: |
-    cd babackend_app
+    cd backend_app
     npm install
     npm run build
-    pm2 stop default
+    pm2 stop all
     sleep 20s
     pm2 start npm -- start
   register: start_up
