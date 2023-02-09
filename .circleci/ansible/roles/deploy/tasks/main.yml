@@ -27,7 +27,7 @@
   become: true
   become_method: sudo
   shell: |
-    cd ~/
+    cd backend_app
     apt-get install tar -y
     ls -a
     cd backend_app
@@ -41,7 +41,6 @@
 - name: start-up
   become: true
   shell:  |
-    cd ~/
     cd babackend_app
     npm install
     npm run build
