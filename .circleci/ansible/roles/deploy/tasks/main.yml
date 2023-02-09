@@ -46,8 +46,12 @@
     npm install
     npm run build
     pm2 stop default
-    sleep 20s
-    pm2 start npm --name "backend" -- run start
   register: start_up
 - debug:
     var: start_up.stdout_lines
+
+- name: start
+  become: true
+  shell: |
+    cd backend_app
+    pm2 start npm -- start
