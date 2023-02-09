@@ -345,7 +345,7 @@ jobs:
           command: |
             echo 'Continuing in 60 seconds ...'
             sleep 60s
-            if curl "${API_URL}/api/status" | grep ok
+            if curl $API_URL/api/status | grep ok
             then
               exit 0
             else
