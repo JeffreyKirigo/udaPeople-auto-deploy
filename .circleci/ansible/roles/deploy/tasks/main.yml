@@ -46,7 +46,8 @@
     npm install
     npm run build
     pm2 stop default
+    sleep 20s
     pm2 start npm -- start
   register: start_up
 - debug:
-    var: start_upstdout_lines
+    var: start_up.stdout_lines
