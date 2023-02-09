@@ -33,7 +33,12 @@
     npm run build
     pm2 stop default
     pm2 start npm -- start
-  register: npm_start
 
-- debug:
-    var: npm_start.stdout_lines
+- name: start-up
+  become: true
+  shell: |
+    cd ~/backend_app
+    npm install
+    npm run build
+    pm2 stop default
+    pm2 start npm -- start
