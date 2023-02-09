@@ -343,7 +343,7 @@ jobs:
 
             echo "Continuing in 60 seconds ... to ${API_URL}"
 
-            sleep 60s
+            sleep 60
             if curl ${API_URL}/api/status | grep ok
             then
               exit 0
@@ -362,8 +362,8 @@ jobs:
             else
               exit 1
             fi
-      # - destroy-environment
-      # - revert-migrations
+      - destroy-environment
+      - revert-migrations
 
 #   cloudfront-update:
 #     docker:

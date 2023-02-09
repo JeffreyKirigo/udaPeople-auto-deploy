@@ -25,14 +25,16 @@
 
 - name: extract backend
   become: true
+  become_method: sudo
   shell: |
     cd ~/backend_app
-    tar -xzvf artifact.tar.gz
+    apt-get install tar -y
+    tar -xzf artifact.tar.gz
     ls -l
   register: extract_output
 
 - debug:
-    var: "{{ extract_output.stdout_lines }}"
+    var: extract_output.stdout_lines
 
 - name: start-up
   become: true
