@@ -20,7 +20,7 @@
 
 - name: copy artifact into instance
   unarchive:
-    src: artifact.tar.gz
+    src: ~/project/artifact.tar.gz
     dest: ~/backend_app/
 
 # - name: extract_backend
