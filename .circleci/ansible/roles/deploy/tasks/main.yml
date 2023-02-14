@@ -33,6 +33,7 @@
 #     var: extract_output.stdout_lines
 
 - name: build
+  become: true
   shell: |
     cd ~/backend_app
     npm install
@@ -42,6 +43,7 @@
     var: start_up.stdout_lines
 
 - name: start
+  become: true
   shell: |
     cd ~/backend_app/dist
     pm2 stop default
