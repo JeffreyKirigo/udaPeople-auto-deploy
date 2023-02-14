@@ -21,7 +21,7 @@
 - name: copy artifact into instance
   unarchive:
     src: ~/project/artifact.tar.gz
-    dest: ~/backend_app/
+    dest: /home/ubuntu/backend_app
 
 # - name: extract_backend
 #   shell: |
@@ -35,7 +35,7 @@
 - name: build
   become: true
   shell: |
-    cd ~/backend_app
+    cd /home/ubuntu/backend_app
     npm install
     npm run build
   register: start_up
@@ -45,9 +45,9 @@
 - name: start
   become: true
   shell: |
-    cd ~/backend_app/dist
+    cd ~/backend_app/
     pm2 stop default
-    pm2 start main.js
+    pm2 start npm -- start
   
   register: execute_node
 - debug:

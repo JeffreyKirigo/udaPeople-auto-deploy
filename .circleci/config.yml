@@ -291,6 +291,8 @@ jobs:
     steps:
       - checkout
       - install-dependencies
+      - restore_cache:
+          keys: [backend-build]
       - add_ssh_keys:
           fingerprints:
             - "cb:95:2b:f8:04:d8:de:20:22:d7:f3:ae:0a:d7:dc:97"
@@ -331,8 +333,8 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
           no_output_timeout: 30m
-      - destroy-environment
-      - revert-migrations
+      # - destroy-environment
+      # - revert-migrations
 
   smoke-test:
     docker:
