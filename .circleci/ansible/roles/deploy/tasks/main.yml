@@ -45,8 +45,9 @@
 - name: start
   become: true
   shell: |
-    cd ~/backend_app/
+    cd /home/ubuntu/backend_app/
     pm2 stop default
+    sleep 20
     pm2 start npm -- start
   
   register: execute_node

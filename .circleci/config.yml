@@ -235,6 +235,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
+      - restore_cache:
+          keys: [backend-build]
       - run:
           name: Run migrations
           command: |
@@ -258,6 +260,8 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
+      - restore_cache:
+          keys: [frontend-build]
       - attach_workspace:
           at: ~/
       - install-dependencies
@@ -349,7 +353,7 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udaPeople" \
               --output text)
-            
+
             export API_URL="http://${BACKEND_IP}:3030"
 
             echo "Continuing in 60 seconds ... to ${API_URL}"
