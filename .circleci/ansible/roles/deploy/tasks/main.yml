@@ -52,7 +52,7 @@
   
   register: execute_node
 - debug:
-    msg: "{{ execute_node.stdout_lines }}"
+    var: execute_node.stdout_lines
 
 - name: Start service on startup
   shell: |
