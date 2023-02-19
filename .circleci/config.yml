@@ -414,9 +414,10 @@ jobs:
 
   cleanup:
     docker:
-      - image: amazon/aws-cli
+      - image: cimg/base:stable
     steps:
       - checkout
+      - install-dependencies
       - run:
           name: Get old stack workflow id
           command: |
