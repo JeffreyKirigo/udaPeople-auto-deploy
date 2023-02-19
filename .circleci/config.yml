@@ -391,7 +391,7 @@ jobs:
           name: Get old workflow ID
           command: |
             export OldWorkFlowID=$(aws cloudformation \
-            list-exports --query "Exports[?Name==\'WorkflowID\'].value"\
+            list-exports --query "Exports[?Name==\'WorkflowID\'].value" \
             --no-paginate --output text | grep -o '[^-]*$')
             echo $OldWorkFlowID >> ~/project/oldworkflowId.txt
             cat ~/project/oldworkflowId.txt
