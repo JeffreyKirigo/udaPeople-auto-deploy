@@ -174,7 +174,7 @@ jobs:
 
   deploy-infrastructure:
     docker:
-      - image: cimg/aws:2023.01
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
@@ -383,7 +383,7 @@ jobs:
 
   cloudfront-update:
     docker:
-      - image: cimg/aws:2023.01
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
