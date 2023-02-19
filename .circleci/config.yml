@@ -386,6 +386,7 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - install-dependencies
       - run:
           name: Get old workflow ID
           command: |
