@@ -198,6 +198,7 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           command: |
+            
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udaPeople" \
@@ -208,7 +209,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment
-      
+
   configure-infrastructure:
     docker:
       - image: cimg/base:stable
@@ -226,6 +227,7 @@ jobs:
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
           no_output_timeout: 30m
+
       - destroy-environment
 
   run-migrations:
