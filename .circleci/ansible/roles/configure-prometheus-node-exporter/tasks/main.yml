@@ -25,12 +25,3 @@
     daemon_reload: yes
     name: node_exporter
     enabled: yes
-
-- name: "node exporter status"
-  become: true
-  shell: |
-    sudo systemctl status node-exporter
-  register: status
-
-- debug:
-    var: status.stdout_lines
