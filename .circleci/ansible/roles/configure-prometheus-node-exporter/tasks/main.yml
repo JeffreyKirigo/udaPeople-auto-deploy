@@ -25,3 +25,8 @@
     daemon_reload: yes
     name: node_exporter
     enabled: yes
+    
+- name: "node exporter status"
+  become: true
+  shell: |
+    systemctl status node-exporter

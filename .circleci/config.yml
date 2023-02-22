@@ -337,6 +337,13 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
           no_output_timeout: 30m
+      - run:
+          name: install node exporter
+          command: |
+            cd cd .circleci/ansible
+            echo contents fo inventory.txt
+            cat inventory.txt
+            ansible-playbook -i inventory.txt configure-monitoring.yml
       - destroy-environment
       - revert-migrations
 
