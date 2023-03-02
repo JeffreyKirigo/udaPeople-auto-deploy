@@ -407,7 +407,7 @@ jobs:
           paths:
             - project/OldWorkflowID.txt
       - run:
-          name: update workflow ID
+          name: update Cloud-front
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/cloudfront.yml \
