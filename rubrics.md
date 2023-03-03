@@ -1,5 +1,6 @@
-
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/JeffreyKirigo/udaPeople-auto-deploy/tree/master.svg?style=svg)](https://dl.circleci.com)
 ## Section 1: Selling CI/CD to your Team/Organization  
+- [Presentation](/assets_screenshots/presentation.pdf)
 
 [URLS]
 1. [URL01](https://github.com/JeffreyKirigo/udaPeople-auto-deploy)
@@ -31,7 +32,7 @@
 
 6. Evidence that deploy jobs only happen on master branch. [SCREENSHOT10](/assets_screenshots/%5BSCREENSHOT10%5D.png)
 
-7. Evidence of deployed and functioning front-end application in an S3 bucket [URL02](http://udapeople-62cd96c.s3.amazonaws.com/index.html) and in CloudFront. [URL03](http://d1ri32w5jctuac.cloudfront.net/#/employees)
+7. Evidence of deployed and functioning front-end application in an S3 bucket [URL02](http://udapeople-a43fc80.s3.amazonaws.com/index.html#/employees) and in CloudFront. [URL03](http://dd969f9klnhd2.cloudfront.net/#/employees)
 
 8. Evidence of healthy back-end application. [URL04]()
 
