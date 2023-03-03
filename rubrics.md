@@ -36,7 +36,7 @@
 8. Evidence of healthy back-end application. [URL04]()
 
 ## Section 3: Turn Errors into Sirens  
-1. Evidence of Prometheus Server. [URL05](http://ec2-100-25-216-73.compute-1.amazonaws.com:9090/targets)
+1. Evidence of Prometheus Server. [URL05](http://ec2-54-89-197-143.compute-1.amazonaws.com:9090/targets)
 
 2. Evidence that Prometheus is monitoring memory, cpu and disk usage of EC2 instances. [SCREENSHOT11](/assets_screenshots/%5BSCREENSHOT11%5D.png)
 
