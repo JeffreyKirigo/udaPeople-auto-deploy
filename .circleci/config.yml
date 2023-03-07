@@ -84,16 +84,17 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys:
+            - frontend-{{ checksum "frontend/package-lock.json" }}
       - run:
-          name: Build front-end
+          name: Install dependencies & Build front-end
           command: |
             cd frontend
             npm install
             npm run build
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-build
+          key: frontend-{{ checksum "frontend/package-lock.json" }}
 
   build-backend:
     docker:
@@ -101,16 +102,17 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build]
+          keys:
+            - backend-{{ checksum "backend/package-lock.json" }}
       - run:
-          name: Back-end build
+          name: Install dependencies & Build back-end
           command: |
             cd backend
             npm install
             npm run build
       - save_cache:
           paths: [backend/node_modules]
-          key: backend-build
+          key: backend-{{ checksum "backend/package-lock.json" }}
 
   test-frontend:
     docker:
@@ -118,7 +120,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys:
+            - frontend-{{ checksum "frontend/package-lock.json" }}
       - run:
           name: test-front-end
           command: |
@@ -132,7 +135,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build]
+          keys:
+            - backend-{{ checksum "backend/package-lock.json" }}
       - run:
           name: test-back-end
           command: |
@@ -146,7 +150,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys:
+            - frontend-{{ checksum "frontend/package-lock.json" }}
       - run:
           name: scan-frontend
           command: |
@@ -162,14 +167,15 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build]
+          keys:
+            - backend-{{ checksum "backend/package-lock.json" }}
       - run:
           name: scan-backend
           command: |
             cd backend
             npm install
-            npm audit fix --force --audit-level=critical
-            npm audit fix --force --audit-level=critical
+            npm audit fix --audit-level=critical --force
+            npm audit fix  --audit-level=critical --force
             npm audit --audit-level=critical
 
   deploy-infrastructure:
@@ -465,22 +471,22 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches:
-              only: [master]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
-      - cloudfront-update:
-          requires: [smoke-test]
-      - cleanup:
-          requires: [cloudfront-update]
+      # - deploy-infrastructure:
+      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      #     filters:
+      #       branches:
+      #         only: [master]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
+      # - smoke-test:
+      #     requires: [deploy-backend, deploy-frontend]
+      # - cloudfront-update:
+      #     requires: [smoke-test]
+      # - cleanup:
+      #     requires: [cloudfront-update]
