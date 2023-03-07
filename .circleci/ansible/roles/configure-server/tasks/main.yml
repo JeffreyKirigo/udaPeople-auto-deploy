@@ -3,7 +3,12 @@
   become: true
   apt:
     name: ["nodejs", "npm"]
-    version: 13.8.0
+
+- name: node version
+  npm:
+    name: nodejs
+    version: '13.8.0'
+
 
 - name: install pm2
   become: true
