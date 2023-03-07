@@ -28,17 +28,17 @@ commands:
             sudo apt install ansible -y
             ansible --version
 
-      - run:
-          name: Install Node & npm
-          command: |
-            sudo apt-get install curl
-            curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - &&\
-            sudo apt-get install nodejs -y
+      # - run:
+      #     name: Install Node & npm
+      #     command: |
+      #       sudo apt-get install curl
+      #       curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - &&\
+      #       sudo apt-get install nodejs -y
 
-            sudo npm cache clean -f
-            sudo npm install -g n
-            sudo n v13.8.0
-            node -v
+      #       sudo npm cache clean -f
+      #       sudo npm install -g n
+      #       sudo n v13.8.0
+      #       node -v
 
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -194,7 +194,7 @@ jobs:
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
       - run:
-          name: Ensure front-end infrastructure exist
+          name: Ensure front-end infrastructure exists
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
@@ -476,16 +476,16 @@ workflows:
           filters:
             branches:
               only: [master]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
-      # - deploy-backend:
-      #     requires: [run-migrations]
-      # - smoke-test:
-      #     requires: [deploy-backend, deploy-frontend]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
       #     requires: [smoke-test]
       # - cleanup:
