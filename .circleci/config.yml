@@ -267,7 +267,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys: 
+            - frontend-{{ checksum "frontend/package-lock.json" }}
       - attach_workspace:
           at: ~/
       - install-dependencies
@@ -301,7 +302,8 @@ jobs:
       - checkout
       - install-dependencies
       - restore_cache:
-          keys: [backend-build]
+          keys: 
+            - backend-{{ checksum "backend/package-lock.json" }}
       - add_ssh_keys:
           fingerprints:
             - "cb:95:2b:f8:04:d8:de:20:22:d7:f3:ae:0a:d7:dc:97"
