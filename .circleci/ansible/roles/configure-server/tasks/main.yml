@@ -5,15 +5,6 @@
     name: ["nodejs", "npm"]
     state: present
 
-
-- name: node version
-  become: true
-  npm:
-    name: nodejs
-    global: yes
-    version: 'v13.8.0'
-
-
 - name: install pm2
   become: true
   npm:
