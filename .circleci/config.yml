@@ -242,7 +242,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build]
+          keys:
+            - backend-{{ checksum "backend/package-lock.json" }}
       - run:
           name: Run migrations
           command: |
