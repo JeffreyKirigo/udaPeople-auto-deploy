@@ -29,7 +29,7 @@
   shell: |
     cd /home/ubuntu/backend_app
     npm install
-    npm run build
+    # npm run build
 
 - name: start app
   become: true

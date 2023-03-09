@@ -223,7 +223,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "cb:95:2b:f8:04:d8:de:20:22:d7:f3:ae:0a:d7:dc:97"
+            - "d5:af:9e:5c:90:6d:3a:bb:bc:cf:f9:85:e9:71:50:0a"
       - attach_workspace:
           at: ~/
       - install-dependencies
